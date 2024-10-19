@@ -47,7 +47,7 @@ jobs:
 
       - name: Decode and save keystore file
         run: |
-          echo "$KEYSTORE" | base64 --decode > keystore.jks
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
 
       - name: Build with Gradle (Release Mode)
         run: ./gradlew assembleRelease
@@ -66,11 +66,19 @@ jobs:
 
       - name: Install Fastlane
         run: |
-          gem install fastlane
+          gem install fastlane --user-install
+          export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
 
-      - name: Upload to Google Play
+      - name: Upload to Google Play (Internal Testing)
         env:
           GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         run: |
           echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" | base64 --decode > /tmp/service_account.json
-          fastlane supply --apk *.apk --track production --json_key /tmp/service_account.json
+          fastlane supply --apk app/build/outputs/apk/release/*.apk --track internal --json_key /tmp/service_account.json
+
+#     - name: Upload to Google Play (Production)
+#       env:
+#         GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+#       run: |
+#         echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" | base64 --decode > /tmp/service_account.json
+#         fastlane supply --apk *.apk --track production --json_key /tmp/service_account.json

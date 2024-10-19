@@ -3,13 +3,14 @@ name: Android Build Workflow
 on:
   push:
     branches:
-      - develop  # Triggers on push to develop
-      - main     # Triggers on push to main
+      - develop  # Triggers on push to develop > staging
+      - main     # Triggers on push to main > production
 
 jobs:
-  build-debug:
+  deploy-to-staging:
     if: github.ref == 'refs/heads/develop'  # Only run this job if pushing to develop
     name: Build and Test in Debug Mode
+    environment: staging
     runs-on: ubuntu-latest
 
     steps:
@@ -30,9 +31,10 @@ jobs:
       - name: Run tests
         run: ./gradlew testDebugUnitTest
 
-  build-release:
+  deploy-to-production:
     if: github.ref == 'refs/heads/main'  # Only run this job if pushing to main
     name: Build and Deploy Release to Google Play
+    environment: production
     runs-on: ubuntu-latest
 
     steps:
@@ -48,7 +50,6 @@ jobs:
       - name: Decode and save keystore file
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
-          cat keystore.jks  # Check the file's contents
 
       - name: Build with Gradle (Release Mode)
         run: ./gradlew assembleRelease

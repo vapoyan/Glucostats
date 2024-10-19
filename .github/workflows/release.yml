@@ -3,11 +3,11 @@ name: Android Build Workflow
 on:
   push:
     branches:
-      - develop  # Triggers on push to develop
-      - main     # Triggers on push to main
+      - develop  # Triggers on push to develop > staging
+      - main     # Triggers on push to main > production
 
 jobs:
-  build-debug:
+  staging:
     if: github.ref == 'refs/heads/develop'  # Only run this job if pushing to develop
     name: Build and Test in Debug Mode
     runs-on: ubuntu-latest
@@ -22,6 +22,14 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Echo environment variables
+        shell: bash
+        run: |
+          echo "ANDROID_KEYSTORE: ${{ secrets.KEYSTORE }}"
+          echo "KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}"
+          echo "KEY_ALIAS: ${{ secrets.KEY_ALIAS }}"
+          echo "KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}"
+
       - name: Build with Gradle (Debug Mode)
         run: ./gradlew assembleDebug
         env:
@@ -30,7 +38,7 @@ jobs:
       - name: Run tests
         run: ./gradlew testDebugUnitTest
 
-  build-release:
+  production:
     if: github.ref == 'refs/heads/main'  # Only run this job if pushing to main
     name: Build and Deploy Release to Google Play
     runs-on: ubuntu-latest
@@ -44,6 +52,14 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
+
+      - name: Echo environment variables
+        shell: bash
+        run: |
+          echo "ANDROID_KEYSTORE: ${{ secrets.KEYSTORE }}"
+          echo "KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}"
+          echo "KEY_ALIAS: ${{ secrets.KEY_ALIAS }}"
+          echo "KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}"
 
       - name: Decode and save keystore file
         run: |

@@ -48,6 +48,7 @@ jobs:
       - name: Decode and save keystore file
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
+          cat keystore.jks  # Check the file's contents
 
       - name: Build with Gradle (Release Mode)
         run: ./gradlew assembleRelease
@@ -74,6 +75,7 @@ jobs:
           GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         run: |
           echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" > /tmp/service_account.json
+          cat /tmp/service_account.json  # Check the file's contents
           fastlane supply --apk app/build/outputs/apk/release/*.apk --track internal --json_key /tmp/service_account.json
 
 #     - name: Upload to Google Play (Production)

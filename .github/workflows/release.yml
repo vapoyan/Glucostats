@@ -10,6 +10,7 @@ jobs:
   staging:
     if: github.ref == 'refs/heads/develop'  # Only run this job if pushing to develop
     name: Build and Test in Debug Mode
+    environment: staging
     runs-on: ubuntu-latest
 
     steps:
@@ -41,6 +42,7 @@ jobs:
   production:
     if: github.ref == 'refs/heads/main'  # Only run this job if pushing to main
     name: Build and Deploy Release to Google Play
+    environment: production
     runs-on: ubuntu-latest
 
     steps:

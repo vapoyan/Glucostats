@@ -80,4 +80,4 @@ jobs:
           GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         run: |
           echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" > /tmp/service_account.json
-          fastlane supply --aab app/build/outputs/bundle/release/app-release.aab --track internal --json_key /tmp/service_account.json --package_name app.glucostats
+          fastlane supply --aab app/build/outputs/bundle/release/app-release.aab --track internal --json_key /tmp/service_account.json --package_name app.glucostats --release_status draft

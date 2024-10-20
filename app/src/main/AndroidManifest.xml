@@ -17,11 +17,41 @@
             android:name=".GlucostatsActivity"
             android:exported="true"
             android:theme="@style/Theme.Glucostats">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!--
+            This intent filter enables deep linking for the application.
+            It listens for the action "android.intent.action.VIEW", meaning the activity
+            can respond to a URL that the user opens from a browser or another application.
+
+            The "android.intent.category.DEFAULT" category indicates that this activity
+            can be started by default for this intent.
+
+            The "android.intent.category.BROWSABLE" category makes the activity accessible
+            when a user clicks a web link (HTTP or HTTPS) from a browser or another app.
+
+            The <data> tags define the scheme and host for deep linking:
+              - android:scheme="http": The scheme specifies that this filter handles "http" URLs.
+              - android:host="glucostats.app": The host defines the specific domain this intent can handle.
+
+            With android:autoVerify="true", Android will automatically verify the host
+            to confirm that the app is associated with the specified domain,
+            enabling App Links functionality.
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:host="glucostats.app" />
+            </intent-filter>
+
         </activity>
     </application>
 

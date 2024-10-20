@@ -49,13 +49,13 @@ jobs:
 
       - name: Decode and save keystore file
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > $GITHUB_WORKSPACE/app/keystore.jks
 
       - name: Build with Gradle (Release Mode)
         run: ./gradlew bundleRelease
         env:
           JAVA_HOME: ${{ steps.setup-java.outputs.path }}
-          ANDROID_KEYSTORE: keystore.jks
+          ANDROID_KEYSTORE: $GITHUB_WORKSPACE/app/keystore.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}

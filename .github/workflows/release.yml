@@ -3,13 +3,43 @@ name: Android Build Workflow
 on:
   push:
     branches:
-      - develop  # Triggers on push to develop > staging
-      - main     # Triggers on push to main > production
+      - develop  # Triggers on push to develop
+      - staging  # Triggers on push to main
 
 jobs:
-  deploy-to-staging:
-    if: github.ref == 'refs/heads/develop'  # Only run this job if pushing to develop
+  # This job runs when there is a push to the develop branch. The goal is to build the app in debug
+  # mode and run unit tests.
+  build-and-run-tests:
+    if: github.ref == 'refs/heads/develop'
     name: Build and Test in Debug Mode
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Installs and configures the Java Development Kit (JDK 17) to build the project.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # Runs the Gradle task to build the APK in debug mode.
+      - name: Build with Gradle (Debug Mode)
+        run: ./gradlew assembleDebug
+        env:
+          JAVA_HOME: ${{ steps.setup-java.outputs.path }}
+
+      # Executes unit tests for the debug build type.
+      - name: Run tests
+        run: ./gradlew testDebugUnitTest
+
+  # This job is triggered on a push to the main branch. The goal is to build the app in release
+  # mode, sign it, and upload it to Google Play for internal testing.
+  deploy-to-staging:
+    if: github.ref == 'refs/heads/staging'
+    name: Build and Deploy Release to Google Play
     environment: staging
     runs-on: ubuntu-latest
 
@@ -17,40 +47,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Installs and configures the Java Development Kit (JDK 17) to build the project.
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Build with Gradle (Debug Mode)
-        run: ./gradlew assembleDebug
-        env:
-          JAVA_HOME: ${{ steps.setup-java.outputs.path }}
-
-      - name: Run tests
-        run: ./gradlew testDebugUnitTest
-
-  deploy-to-production:
-    if: github.ref == 'refs/heads/main'  # Only run this job if pushing to main
-    name: Build and Deploy Release to Google Play
-    environment: production
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
+      # The keystore, stored as a base64-encoded string in GitHub Secrets, is decoded and saved
+      # to /tmp/keystore.jks. This file is used to sign the app in the next step.
       - name: Decode and save keystore file
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 --decode > /tmp/keystore.jks
 
+      # Builds the app bundle in release mode using the decoded keystore file and environment
+      # variables for signing.
       - name: Build with Gradle (Release Mode)
         run: ./gradlew bundleRelease
         env:
@@ -60,21 +71,22 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      # Debugging step: Check if AAB file is generated
-      - name: List generated files
-        run: ls -alh app/build/outputs/bundle/release
-
+      # Uploads the generated AAB as an artifact so it can be used later or for uploading to store.
       - name: Upload artifact for later use
         uses: actions/upload-artifact@v3
         with:
           name: release-aab
           path: app/build/outputs/bundle/release/app-release.aab
 
+      # Installs Fastlane, a tool to automate deployments to the Google Play Store.
       - name: Install Fastlane
         run: |
           gem install fastlane --user-install
           export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
 
+      # Uploads the signed Android App Bundle to Google Play for internal testing using the Fastlane
+      # supply command. The SERVICE_ACCOUNT_JSON is provided as a secret containing the Google Play
+      # API credentials.
       - name: Upload to Google Play (Internal Testing)
         env:
           GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}

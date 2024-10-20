@@ -24,7 +24,7 @@ jobs:
           java-version: '17'
 
       - name: Build with Gradle (Debug Mode)
-        run: ./gradlew assembleDebug
+        run: ./gradlew bundleRelease
         env:
           JAVA_HOME: ${{ steps.setup-java.outputs.path }}
 
@@ -63,8 +63,8 @@ jobs:
       - name: Upload artifact for later use
         uses: actions/upload-artifact@v3
         with:
-          name: release-apk
-          path: app/build/outputs/apk/release/*.apk
+          name: release-aab
+          path: app/build/outputs/bundle/release/*.aab
 
       - name: Install Fastlane
         run: |
@@ -76,12 +76,4 @@ jobs:
           GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         run: |
           echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" > /tmp/service_account.json
-          cat /tmp/service_account.json  # Check the file's contents
-          fastlane supply --apk app/build/outputs/apk/release/*.apk --track internal --json_key /tmp/service_account.json --package_name app.glucostats
-
-#     - name: Upload to Google Play (Production)
-#       env:
-#         GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-#       run: |
-#         echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" | base64 --decode > /tmp/service_account.json
-#         fastlane supply --apk *.apk --track production --json_key /tmp/service_account.json
+          fastlane supply --aab app/build/outputs/bundle/release/*.aab --track internal --json_key /tmp/service_account.json --package_name app.glucostats

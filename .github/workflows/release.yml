@@ -52,13 +52,17 @@ jobs:
 #          echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
 
       - name: Build with Gradle (Release Mode)
-        run: ./gradlew assembleRelease
+        run: ./gradlew bundleRelease
         env:
           JAVA_HOME: ${{ steps.setup-java.outputs.path }}
 #          ANDROID_KEYSTORE: keystore.jks
 #          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
 #          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
 #          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      # Debugging step: Check if AAB file is generated
+      - name: List generated files
+        run: ls -alh app/build/outputs/bundle/release
 
       - name: Upload artifact for later use
         uses: actions/upload-artifact@v3

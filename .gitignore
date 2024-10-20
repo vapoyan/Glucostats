@@ -9,3 +9,4 @@
 local.properties
 /.idea/
 /app/release/app-release.aab
+/.kotlin/

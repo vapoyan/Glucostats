@@ -22,7 +22,7 @@ android {
         create("release") {
             keyAlias = System.getenv("KEY_ALIAS") ?: ""
             keyPassword = System.getenv("KEY_PASSWORD") ?: ""
-            storeFile = file(System.getenv("KEYSTORE") ?: "keystore.jks")
+            storeFile = file(System.getenv("ANDROID_KEYSTORE") ?: "keystore.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
         }
     }

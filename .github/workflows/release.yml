@@ -24,7 +24,7 @@ jobs:
           java-version: '17'
 
       - name: Build with Gradle (Debug Mode)
-        run: ./gradlew bundleRelease
+        run: ./gradlew assembleDebug
         env:
           JAVA_HOME: ${{ steps.setup-java.outputs.path }}
 

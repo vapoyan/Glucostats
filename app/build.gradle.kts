@@ -53,6 +53,8 @@ android {
 
 dependencies {
 
+    implementation(project(":settings"))
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

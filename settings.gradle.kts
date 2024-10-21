@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Glucostats"
 include(":app")
+include(":settings")

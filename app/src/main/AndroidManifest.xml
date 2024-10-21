@@ -48,7 +48,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <!-- Handle HTTP URLs -->
                 <data android:scheme="http" />
+                <data android:host="glucostats.app" />
+
+                <!-- Handle HTTPS URLs -->
+                <data android:scheme="https" />
                 <data android:host="glucostats.app" />
             </intent-filter>
 

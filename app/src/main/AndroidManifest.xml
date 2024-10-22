@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="app.glucostats"
+    >
 
     <application
         android:name=".GlucostatsApplication"
@@ -55,6 +58,15 @@
                 <!-- Handle HTTPS URLs -->
                 <data android:scheme="https" />
                 <data android:host="glucostats.app" />
+
+                <!-- Handle HTTP URLs with www. -->
+                <data android:scheme="http" />
+                <data android:host="www.glucostats.app" />
+
+                <!-- Handle HTTPS URLs with www. -->
+                <data android:scheme="https" />
+                <data android:host="www.glucostats.app" />
+
             </intent-filter>
 
         </activity>

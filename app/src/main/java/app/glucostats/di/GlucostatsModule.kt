@@ -1,6 +1,6 @@
 package app.glucostats.di
 
-import app.glucostats.dexcom.api.DexcomApi
+import app.glucostats.dexcom.api.Dexcom
 import app.glucostats.dexcom.impl.DexcomImpl
 import dagger.Module
 import dagger.Provides
@@ -14,6 +14,6 @@ class GlucostatsModule {
 
     @Provides
     @Singleton
-    fun providesDexcom(): DexcomApi = DexcomImpl()
+    fun providesDexcom(): Dexcom = DexcomImpl()
 
 }

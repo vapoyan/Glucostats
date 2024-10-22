@@ -2,7 +2,7 @@ package app.glucostats.dexcom.api
 
 import android.net.Uri
 
-interface DexcomApi {
+interface Dexcom {
 
     fun createDexcomLoginUrl(): Uri
 }

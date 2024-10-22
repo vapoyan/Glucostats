@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import app.glucostats.dexcom.api.DexcomApi
+import app.glucostats.dexcom.api.Dexcom
 import app.glucostats.ui.theme.GlucostatsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,21 +22,21 @@ import javax.inject.Inject
 class GlucostatsActivity : ComponentActivity() {
 
     @Inject
-    lateinit var dexcomApi: DexcomApi
+    lateinit var dexcom: Dexcom
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             GlucostatsTheme {
-                Greeting(dexcomApi)
+                Greeting(dexcom)
             }
         }
     }
 }
 
 @Composable
-fun Greeting(dexcomApi: DexcomApi) {
+fun Greeting(dexcom: Dexcom) {
     val context = LocalContext.current
 
     Box(
@@ -44,7 +44,7 @@ fun Greeting(dexcomApi: DexcomApi) {
         modifier = Modifier.fillMaxSize()
     ) {
         Button(onClick = {
-            val intent = Intent(Intent.ACTION_VIEW, dexcomApi.createDexcomLoginUrl())
+            val intent = Intent(Intent.ACTION_VIEW, dexcom.createDexcomLoginUrl())
             context.startActivity(intent)
         }) {
             Text(text = "Click Me")

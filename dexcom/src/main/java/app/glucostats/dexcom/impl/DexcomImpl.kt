@@ -1,9 +1,9 @@
 package app.glucostats.dexcom.impl
 
 import android.net.Uri
-import app.glucostats.dexcom.api.DexcomApi
+import app.glucostats.dexcom.api.Dexcom
 
-class DexcomImpl : DexcomApi {
+class DexcomImpl : Dexcom {
 
     override fun createDexcomLoginUrl(): Uri = Uri.parse(
         AUTH_URI +

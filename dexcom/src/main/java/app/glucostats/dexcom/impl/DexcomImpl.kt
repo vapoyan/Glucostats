@@ -1,7 +1,7 @@
 package app.glucostats.dexcom.impl
 
 import android.net.Uri
-import app.glucostats.dexcom.api.Dexcom
+import app.glucostats.dexcom.data.api.Dexcom
 
 class DexcomImpl : Dexcom {
 

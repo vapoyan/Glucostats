@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import app.glucostats.dexcom.api.Dexcom
+import app.glucostats.dexcom.data.api.Dexcom
 import app.glucostats.ui.theme.GlucostatsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

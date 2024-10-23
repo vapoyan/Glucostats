@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Glucostats"
 include(":app")
 include(":dexcom")
+include(":network")

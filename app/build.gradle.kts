@@ -53,6 +53,7 @@ android {
 
 dependencies {
 
+    implementation(project(":network"))
     implementation(project(":dexcom"))
 
     // Hilt

@@ -1,4 +1,4 @@
-package app.glucostats.dexcom.api
+package app.glucostats.dexcom.data.api
 
 import android.net.Uri
 

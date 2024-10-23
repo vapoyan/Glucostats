@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glucostats"
         tools:targetApi="31">
+
         <activity
             android:name=".GlucostatsActivity"
             android:exported="true"
@@ -25,6 +26,11 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity android:name=".dexcom.presentation.ui.DexcomActivity"
+            android:exported="true">
 
             <!--
             This intent filter enables deep linking for the application.
@@ -51,14 +57,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- Handle HTTP URLs -->
-                <data android:scheme="http" />
-                <data android:host="glucostats.app" />
-
-                <!-- Handle HTTPS URLs -->
-                <data android:scheme="https" />
-                <data android:host="glucostats.app" />
-
                 <!-- Handle HTTP URLs with www. -->
                 <data android:scheme="http" />
                 <data android:host="www.glucostats.app" />
@@ -70,6 +68,7 @@
             </intent-filter>
 
         </activity>
+
     </application>
 
 </manifest>

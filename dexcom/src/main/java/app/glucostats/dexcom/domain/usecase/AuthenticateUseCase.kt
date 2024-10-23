@@ -1,5 +1,6 @@
 package app.glucostats.dexcom.domain.usecase
 
+import app.glucostats.dexcom.BuildConfig
 import app.glucostats.dexcom.data.api.Dexcom
 import app.glucostats.dexcom.data.model.TokenResponse
 import app.glucostats.network.safeApiCall
@@ -19,8 +20,8 @@ class AuthenticateUseCase @Inject constructor(private val dexcom: Dexcom) {
     suspend fun execute(code: String, redirectUri: String): Result<TokenResponse> {
         return safeApiCall {
             dexcom.authenticate(
-                clientId = "your_client_id",
-                clientSecret = "your_client_secret",
+                clientId = BuildConfig.DEXCOM_CLIENT_ID,
+                clientSecret = BuildConfig.DEXCOM_CLIENT_SECRET,
                 code = code,
                 redirectUri = redirectUri
             )

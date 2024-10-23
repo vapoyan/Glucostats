@@ -9,11 +9,20 @@ android {
     namespace = "app.glucostats.dexcom"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "DEXCOM_CLIENT_ID",
+            "\"${project.findProperty("DEXCOM_CLIENT_ID") ?: ""}\"")
+        buildConfigField("String", "DEXCOM_CLIENT_SECRET",
+            "\"${project.findProperty("DEXCOM_CLIENT_SECRET") ?: ""}\"")
     }
 
     buildTypes {
@@ -46,6 +55,7 @@ dependencies {
 
     // Retrofit for networking
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

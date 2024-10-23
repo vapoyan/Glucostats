@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import app.glucostats.dexcom.BuildConfig
 import app.glucostats.ui.theme.GlucostatsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,6 +32,8 @@ class GlucostatsActivity : ComponentActivity() {
             }
         }
     }
+
+
 }
 
 @Composable
@@ -42,7 +45,7 @@ fun Greeting() {
         modifier = Modifier.fillMaxSize()
     ) {
         Button(onClick = {
-            val clientId = "A6MgXWzJM7knvVPpMBos3vaANKuNiOMu"
+            val clientId = BuildConfig.DEXCOM_CLIENT_ID
             val redirectUri = "https://www.glucostats.app"
             val authUrl = "https://sandbox-api.dexcom.com/v2/oauth2/login?client_id=$clientId&redirect_uri=$redirectUri&response_type=code&scope=offline_access"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))

@@ -20,9 +20,11 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "DEXCOM_CLIENT_ID",
-            "\"${project.findProperty("DEXCOM_CLIENT_ID") ?: ""}\"")
+            "\"${project.findProperty("DEXCOM_CLIENT_ID") ?:
+            System.getenv("DEXCOM_CLIENT_ID") ?: ""}\"")
         buildConfigField("String", "DEXCOM_CLIENT_SECRET",
-            "\"${project.findProperty("DEXCOM_CLIENT_SECRET") ?: ""}\"")
+            "\"${project.findProperty("DEXCOM_CLIENT_SECRET") ?:
+            System.getenv("DEXCOM_CLIENT_SECRET") ?: ""}\"")
     }
 
     buildTypes {

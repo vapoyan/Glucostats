@@ -14,6 +14,10 @@ jobs:
     name: Build and Test in Debug Mode
     runs-on: ubuntu-latest
 
+    env:
+      DEXCOM_CLIENT_ID: ${{ secrets.DEXCOM_CLIENT_ID }}
+      DEXCOM_CLIENT_SECRET: ${{ secrets.DEXCOM_CLIENT_SECRET }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -42,6 +46,10 @@ jobs:
     name: Build and Deploy Release to Google Play
     environment: staging
     runs-on: ubuntu-latest
+
+    env:
+      DEXCOM_CLIENT_ID: ${{ secrets.DEXCOM_CLIENT_ID }}
+      DEXCOM_CLIENT_SECRET: ${{ secrets.DEXCOM_CLIENT_SECRET }}
 
     steps:
       - name: Checkout code

@@ -19,9 +19,9 @@ class DexcomViewModel @Inject constructor(
     private val _authResult = androidx.lifecycle.MutableLiveData<Result<TokenResponse>>()
     val authResult: androidx.lifecycle.LiveData<Result<TokenResponse>> = _authResult
 
-    fun authenticate(code: String) {
+    fun authenticate(code: String, redirectUri: String) {
         viewModelScope.launch {
-            val result = authenticateUseCase.execute(code)
+            val result = authenticateUseCase.execute(code, redirectUri)
             _authResult.postValue(result)
         }
     }

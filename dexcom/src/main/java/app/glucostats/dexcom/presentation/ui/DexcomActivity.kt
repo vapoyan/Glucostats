@@ -30,10 +30,13 @@ class DexcomActivity : ComponentActivity() {
     private fun handleIntentData() {
         val data: Uri? = intent?.data
         data?.let {
+            val redirectUri = it.scheme + "://" + it.host + it.path
             val code = it.getQueryParameter("code")
             if (code != null) {
                 // Exchange authorization code for access token
-                dexcomViewModel.authenticate(code)
+                dexcomViewModel.authenticate(code, redirectUri)
+            } else if (it.getQueryParameter("error") == "access_denied") {
+                // TODO: Handle case where user denied access
             }
         }
 

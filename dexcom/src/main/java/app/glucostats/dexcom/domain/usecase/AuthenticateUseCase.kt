@@ -15,13 +15,13 @@ class AuthenticateUseCase @Inject constructor(private val dexcom: Dexcom) {
      * @param code The authorization code received from Dexcom.
      * @return A Result containing the TokenResponse or an error.
      */
-    suspend fun execute(code: String): Result<TokenResponse> {
+    suspend fun execute(code: String, redirectUri: String): Result<TokenResponse> {
         return safeApiCall {
             dexcom.authenticate(
                 clientId = "your_client_id",
                 clientSecret = "your_client_secret",
                 code = code,
-                redirectUri = "your_redirect_uri"
+                redirectUri = redirectUri
             )
         }
     }

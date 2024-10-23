@@ -1,6 +1,7 @@
 package app.glucostats
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -41,10 +42,13 @@ fun Greeting() {
         modifier = Modifier.fillMaxSize()
     ) {
         Button(onClick = {
-            //val intent = Intent(Intent.ACTION_VIEW, dexcom.createDexcomLoginUrl())
-            //context.startActivity(intent)
+            val clientId = "A6MgXWzJM7knvVPpMBos3vaANKuNiOMu"
+            val redirectUri = "https://www.glucostats.app"
+            val authUrl = "https://sandbox-api.dexcom.com/v2/oauth2/login?client_id=$clientId&redirect_uri=$redirectUri&response_type=code&scope=offline_access"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))
+            context.startActivity(intent)
         }) {
-            Text(text = "Click Me")
+            Text(text = "Connect Dexcom")
         }
     }
 }

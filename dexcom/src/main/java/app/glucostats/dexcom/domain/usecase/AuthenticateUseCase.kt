@@ -13,6 +13,7 @@ class AuthenticateUseCase @Inject constructor(private val dexcom: Dexcom) {
     /**
      * Executes the authentication process by exchanging the authorization code for an access token.
      * @param code The authorization code received from Dexcom.
+     * @param redirectUri The redirect URI associated with the application.
      * @return A Result containing the TokenResponse or an error.
      */
     suspend fun execute(code: String, redirectUri: String): Result<TokenResponse> {

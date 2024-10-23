@@ -41,6 +41,17 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Retrofit for networking
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // OkHttp for the HTTP client
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // Coroutine support for Retrofit
+    implementation(libs.kotlinx.coroutines.android)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

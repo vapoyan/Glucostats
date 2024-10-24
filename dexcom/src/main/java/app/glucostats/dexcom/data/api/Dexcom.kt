@@ -39,6 +39,23 @@ interface Dexcom {
     ): TokenResponse
 
     /**
+     * Refresh the access token using the refresh token.
+     * @param clientId The client ID assigned by Dexcom.
+     * @param clientSecret The client secret assigned by Dexcom.
+     * @param refreshToken The refresh token obtained from previous authentication.
+     * @param grantType The type of OAuth grant (default: refresh_token).
+     * @return A TokenResponse object containing the new access token.
+     */
+    @POST("v2/oauth2/token")
+    @FormUrlEncoded
+    suspend fun refreshAccessToken(
+        @Field("client_id") clientId: String,
+        @Field("client_secret") clientSecret: String,
+        @Field("refresh_token") refreshToken: String,
+        @Field("grant_type") grantType: String = "refresh_token"
+    ): TokenResponse
+
+    /**
      * Retrieve estimated glucose values (EGVs) for a specific time range.
      * @param accessToken The access token for authorization.
      * @param startDate The start date of the range in ISO 8601 format.

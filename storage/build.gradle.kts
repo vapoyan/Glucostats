@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.androidx.activity)
     ksp(libs.hilt.compiler)
 
+    implementation(libs.androidx.security.crypto)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

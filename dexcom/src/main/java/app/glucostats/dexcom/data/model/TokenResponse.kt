@@ -14,5 +14,7 @@ data class TokenResponse(
     @SerializedName("token_type")
     val tokenType: String,
     @SerializedName("expires_in")
-    val expiresIn: Int
+    val expiresIn: Int,
+    @SerializedName("refresh_token")
+    val refreshToken: String
 )

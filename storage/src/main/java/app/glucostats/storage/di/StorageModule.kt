@@ -8,6 +8,7 @@ import app.glucostats.storage.domain.repository.TokenRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -17,7 +18,7 @@ object StorageModule {
 
     @Provides
     @Singleton
-    fun providePreferencesManager(context: Context): PreferencesManager {
+    fun providePreferencesManager(@ApplicationContext context: Context): PreferencesManager {
         return PreferencesManager(context)
     }
 

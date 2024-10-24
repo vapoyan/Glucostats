@@ -23,4 +23,20 @@ class TokenRepositoryImpl @Inject constructor(
     override fun getRefreshToken(): String? {
         return tokenStorage.getRefreshToken()
     }
+
+    override fun saveTokenType(tokenType: String) {
+        tokenStorage.saveTokenType(tokenType)
+    }
+
+    override fun getTokenType(): String? {
+        return tokenStorage.getTokenType()
+    }
+
+    override fun saveExpiresIn(expiresIn: Int) {
+        tokenStorage.saveExpiresIn(expiresIn)
+    }
+
+    override fun getExpiresIn(): Int? {
+        return tokenStorage.getExpiresIn()
+    }
 }

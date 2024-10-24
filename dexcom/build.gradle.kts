@@ -48,6 +48,7 @@ android {
 dependencies {
 
     implementation(project(":network"))
+    implementation(project(":storage"))
 
     // Hilt
     implementation(libs.hilt.android)

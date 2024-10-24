@@ -3,17 +3,21 @@ package app.glucostats.dexcom.presentation.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import app.glucostats.dexcom.presentation.viewmodel.DexcomViewModel
+import app.glucostats.storage.data.local.TokenStorage
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Activity for handling Dexcom OAuth authentication and managing Dexcom-related operations.
  */
 @AndroidEntryPoint
 class DexcomActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var tokenStorage: TokenStorage
 
     private val dexcomViewModel: DexcomViewModel by viewModels()
 
@@ -44,11 +48,11 @@ class DexcomActivity : ComponentActivity() {
         dexcomViewModel.authResult.observe(this) { result ->
             if (result.isSuccess) {
                 val tokenResponse = result.getOrNull()
-                // Use the access token for further API calls
-                Log.d("DexcomActivity", "Access Token: ${tokenResponse?.accessToken}")
+                if (tokenResponse != null) {
+                    dexcomViewModel.saveToken(tokenResponse)
+                }
             } else {
-                // Handle error
-                Log.d("DexcomActivity", "Error")
+                // TODO: Handle authentication failure
             }
         }
     }

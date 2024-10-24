@@ -32,4 +32,12 @@ interface TokenRepository {
      * @return The saved refresh token, or null if no token is saved.
      */
     fun getRefreshToken(): String?
+
+    fun saveTokenType(tokenType: String)
+
+    fun getTokenType(): String?
+
+    fun saveExpiresIn(expiresIn: Int)
+
+    fun getExpiresIn(): Int?
 }

@@ -54,10 +54,12 @@ android {
 dependencies {
 
     implementation(project(":network"))
+    implementation(project(":storage"))
     implementation(project(":dexcom"))
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.runtime.livedata)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 

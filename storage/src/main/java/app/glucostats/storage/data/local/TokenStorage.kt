@@ -78,4 +78,22 @@ class TokenStorage(private val preferencesManager: PreferencesManager) {
     fun getRefreshToken(): String? {
         return preferencesManager.getString("refresh_token")
     }
+
+    /**
+     * Saves the timestamp of when the token was saved.
+     *
+     * @param time The timestamp to be saved.
+     */
+    fun saveTokenSaveTime(time: Long) {
+        preferencesManager.saveString("token_save_time", time.toString())
+    }
+
+    /**
+     * Retrieves the timestamp of when the token was saved.
+     *
+     * @return The saved timestamp, or null if no timestamp is saved.
+     */
+    fun getTokenSaveTime(): Long? {
+        return preferencesManager.getString("token_save_time")?.toLong()
+    }
 }

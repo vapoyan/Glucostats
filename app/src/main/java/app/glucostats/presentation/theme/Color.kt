@@ -1,4 +1,4 @@
-package app.glucostats.ui.theme
+package app.glucostats.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

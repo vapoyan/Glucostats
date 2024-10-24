@@ -48,6 +48,6 @@ class DexcomViewModel @Inject constructor(
         tokenRepository.saveTokenType(tokenResponse.tokenType)
         tokenRepository.saveExpiresIn(tokenResponse.expiresIn)
         tokenRepository.saveRefreshToken(tokenResponse.refreshToken)
-
+        tokenRepository.saveTokenSaveTime(System.currentTimeMillis() / 1000)
     }
 }

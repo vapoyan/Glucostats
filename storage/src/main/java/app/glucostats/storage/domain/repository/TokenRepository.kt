@@ -40,4 +40,8 @@ interface TokenRepository {
     fun saveExpiresIn(expiresIn: Int)
 
     fun getExpiresIn(): Int?
+
+    fun getTokenSaveTime(): Long? // Timestamp of when the token was saved
+
+    fun saveTokenSaveTime(time: Long)
 }

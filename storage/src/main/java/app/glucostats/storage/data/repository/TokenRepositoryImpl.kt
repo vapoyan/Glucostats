@@ -10,6 +10,7 @@ class TokenRepositoryImpl @Inject constructor(
 
     override fun saveAccessToken(token: String) {
         tokenStorage.saveAccessToken(token)
+        saveTokenSaveTime(System.currentTimeMillis() / 1000)
     }
 
     override fun getAccessToken(): String? {
@@ -38,5 +39,13 @@ class TokenRepositoryImpl @Inject constructor(
 
     override fun getExpiresIn(): Int? {
         return tokenStorage.getExpiresIn()
+    }
+
+    override fun getTokenSaveTime(): Long? {
+        return tokenStorage.getTokenSaveTime()
+    }
+
+    override fun saveTokenSaveTime(time: Long) {
+        tokenStorage.saveTokenSaveTime(time)
     }
 }

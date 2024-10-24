@@ -23,3 +23,4 @@ rootProject.name = "Glucostats"
 include(":app")
 include(":dexcom")
 include(":network")
+include(":storage")
